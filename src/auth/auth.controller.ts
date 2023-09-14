@@ -6,12 +6,9 @@ import { RefreshJwtAuthGuard } from './guards/refresh-jwt-auth.guard';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { UsersService } from 'src/users/users.service';
 import { AuthUserDto } from './dto/auth-user.dto';
-import { ValidateUserDto } from './dto/validate-user.dto';
 
 @Controller('auth')
 export class AuthController {
-
-  
   constructor(
     private authService: AuthService,
     private usersService: UsersService,
@@ -30,8 +27,8 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @Post('test')
-  async test() {
-    return { test: 'test' };
+  async test(@Request() req: any) {
+    return { test: 'test', user: req.user };
   }
 
   @UseGuards(RefreshJwtAuthGuard)

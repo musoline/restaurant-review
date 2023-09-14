@@ -4,11 +4,13 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './entities/user.entity';
+import { User } from './users/entities/user.entity';
 import { ConfigModule } from '@nestjs/config';
-import { Restaurant } from './entities/restaurant.entity';
-import { Review } from './entities/review.entity';
-import { Comment } from './entities/comment.entity';
+import { SeederModule } from './seeder/seeder.module';
+import { RestaurantModule } from './restaurant/restaurant.module';
+import { Restaurant } from './restaurant/entities/restaurant.entity';
+import { ReviewModule } from './review/review.module';
+import { Review } from './review/entities/review.entity';
 
 @Module({
   imports: [
@@ -24,9 +26,12 @@ import { Comment } from './entities/comment.entity';
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      entities: [User, Restaurant, Review, Comment],
+      entities: [User, Restaurant, Review],
       synchronize: true,
     }),
+    SeederModule,
+    RestaurantModule,
+    ReviewModule,
   ],
   controllers: [AppController],
   providers: [AppService],

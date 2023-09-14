@@ -15,7 +15,7 @@ import { RefreshJwtStrategy } from './strategies/refresh-jwt-token.strategy';
     JwtModule.register({
       global: true,
       secret: "test",
-      signOptions: { expiresIn: '600s' },
+      signOptions: { expiresIn: '6000s' },
     }),
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy, RefreshJwtStrategy],
