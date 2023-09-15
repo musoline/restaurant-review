@@ -15,11 +15,11 @@ export class RestaurantController {
   @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
-    return this.restaurantService.findAllWithReview();
+    return this.restaurantService.findAllWithRating();
   }
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    return await this.restaurantService.findOne(+id);
+    return await this.restaurantService.findOneWithRating(+id);
   }
 }

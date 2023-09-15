@@ -13,9 +13,9 @@ export class SeederService {
   ) {}
 
   async seedData() {
-    this.connection.query(`TRUNCATE restaurant RESTART IDENTITY CASCADE;`);
-    await this.restaurantService.seedData();
-    this.connection.query(`TRUNCATE review RESTART IDENTITY CASCADE;`);
-    await this.reviewService.seedData();
+    // this.connection.query(`TRUNCATE restaurant RESTART IDENTITY CASCADE;`);
+    // await this.restaurantService.seedData();
+    // this.connection.query(`TRUNCATE review RESTART IDENTITY CASCADE;`);
+    // await this.reviewService.seedData();
   }
 }

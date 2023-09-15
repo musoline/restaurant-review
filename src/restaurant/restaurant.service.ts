@@ -19,39 +19,30 @@ export class RestaurantService {
   }
 
   findAll() {
-    return this.restaurantRepository.find({});
+    return this.restaurantRepository.find();
   }
 
-  async findOne(id: number): Promise<Restaurant | null> {
-    return await this.restaurantRepository.findOneBy({ id });
-  }
-
-  async findAllWithReview() {
-    const restaurants = await this.restaurantRepository
+  async findOneWithRating(id: number): Promise<Restaurant | null | undefined> {
+    return await this.restaurantRepository
       .createQueryBuilder('res')
-      .select('res.id', 'RestaurantID')
+      .select('res.id', 'id')
+      .addSelect('res.name', 'name')
+      .addSelect('AVG(rw.star)', 'rating')
+      .leftJoin(Review, 'rw', 'res.id = rw.restaurantId')
+      .where('res.id = :id', { id })
+      .groupBy('res.id')
+      .getRawOne();
+  }
+
+  async findAllWithRating(): Promise<Restaurant[] | null | undefined> {
+    return await this.restaurantRepository
+      .createQueryBuilder('res')
+      .select('res.id', 'id')
+      .addSelect('res.name', 'name')
       .addSelect('AVG(rw.star)', 'rating')
       .leftJoin(Review, 'rw', 'res.id = rw.restaurantId')
       .groupBy('res.id')
       .getRawMany();
-
-    // .getMany();
-    // const restaurants = await this.restaurantRepository
-    // .createQueryBuilder('restaurant')
-    // .leftJoinAndSelect('restaurant.reviews', 'review')
-    // .getMany();
-    return restaurants;
-    // return restaurants.map((restaurant) => {
-    //   const reviewsCount = restaurant.reviews.length;
-    //   const initialValue = 0;
-    //   const sumWithInitial = restaurant.reviews
-    //     .map((rev) => rev.star)
-    //     .reduce(
-    //       (accumulator, currentValue) => accumulator + currentValue,
-    //       initialValue,
-    //     );
-    //   return sumWithInitial / reviewsCount;
-    // });
   }
 
   async seedData() {

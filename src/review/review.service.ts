@@ -42,10 +42,6 @@ export class ReviewService {
     return `This action returns a #${id} review`;
   }
 
-
-
-
-
   private async average(arr: number[]) {
     const length = arr.length;
     const initialValue = 0;
@@ -91,7 +87,7 @@ export class ReviewService {
 
     await Promise.all(
       dataToSeed.map(async (data: CreateReviewDto) => {
-        this.create(data, { id: 1, email: 'test@test.com' });
+        // this.create(data, { id: 1, email: 'test@test.com' });
       }),
     );
   }

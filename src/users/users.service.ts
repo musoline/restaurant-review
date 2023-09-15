@@ -30,7 +30,7 @@ export class UsersService {
 
     const { password, ...result } = user;
 
-    return result;
+    return { message: 'User Successfully Created', result: result };
   }
 
   async findOne(condition: any): Promise<User | null> {
