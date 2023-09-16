@@ -3,9 +3,7 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
-  Delete,
   UseGuards,
   Request,
 } from '@nestjs/common';
@@ -16,7 +14,7 @@ import { AuthUserDto } from 'src/auth/dto/auth-user.dto';
 
 @Controller('api/review')
 export class ReviewController {
-  constructor(private readonly reviewService: ReviewService) {}
+  constructor(private readonly reviewService: ReviewService) { }
 
   @UseGuards(JwtAuthGuard)
   @Post()
@@ -37,8 +35,4 @@ export class ReviewController {
     return this.reviewService.findAllWithRestaurantId(+id);
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.reviewService.findOne(+id);
-  // }
 }

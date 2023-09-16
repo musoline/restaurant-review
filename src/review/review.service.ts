@@ -47,33 +47,11 @@ export class ReviewService {
       .addSelect("user.name", "userName")
       .leftJoin(User, 'user', 'user.id = rew.userId')
       .where('rew.restaurantId = :id', { id })
+      .orderBy("rew.id", "DESC")
       .groupBy('rew.id').addGroupBy("user.id")
       .getRawMany();
   }
-
-  async findAverageOfRestaurant(restaurantId: number) {
-    return this.average(
-      (await this.reviewRepository.findBy({ restaurantId })).map(
-        (el) => el.star,
-      ),
-    );
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} review`;
-  }
-
-  private async average(arr: number[]) {
-    const length = arr.length;
-    const initialValue = 0;
-    const sumWithInitial = arr.reduce(
-      (accumulator, currentValue) => accumulator + currentValue,
-      initialValue,
-    );
-
-    return sumWithInitial / length;
-  }
-
+  
   async seedData() {
     const dataToSeed: CreateReviewDto[] = [
       {

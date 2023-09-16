@@ -10,7 +10,7 @@ export class RestaurantService {
   constructor(
     @InjectRepository(Restaurant)
     private readonly restaurantRepository: Repository<Restaurant>,
-  ) {}
+  ) { }
 
   async create(
     createRestaurantDto: CreateRestaurantDto,
@@ -28,6 +28,8 @@ export class RestaurantService {
       .select('res.id', 'id')
       .addSelect('res.name', 'name')
       .addSelect('AVG(rw.star)', 'rating')
+      .addSelect('MIN(rw.star)', "lowest")
+      .addSelect('MAX(rw.star)', "highest")
       .leftJoin(Review, 'rw', 'res.id = rw.restaurantId')
       .where('res.id = :id', { id })
       .groupBy('res.id')
