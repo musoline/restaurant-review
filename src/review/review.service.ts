@@ -11,7 +11,7 @@ export class ReviewService {
   constructor(
     @InjectRepository(Review)
     private readonly reviewRepository: Repository<Review>,
-  ) {}
+  ) { }
 
   create(createReviewDto: CreateReviewDto, user: AuthUserDto) {
     return this.reviewRepository.save({
@@ -23,23 +23,30 @@ export class ReviewService {
     });
   }
 
-  findAll() {
-    // return this.reviewRepository.createQueryBuilder("review").select("AVG(review.star)","rating").getRawOne();
-    return this.reviewRepository
-      .createQueryBuilder('review')
-      .select('AVG(review.star)', 'rating')
-      .getRawMany();
-  }
-
-
-  async findAllWithRestaurantId(restaurantId: number) {
+  async findAll() {
     return await this.reviewRepository
       .createQueryBuilder('rew')
       .select('rew.id', 'id')
       .addSelect('rew.star', "star")
       .addSelect('rew.comment', 'comment')
-      .addSelect("user.name", "UserName")
+      .addSelect('rew.date_visit', 'visitDate')
+      .addSelect("user.name", "userName")
       .leftJoin(User, 'user', 'user.id = rew.userId')
+      .groupBy('rew.id').addGroupBy("user.id")
+      .getRawMany();
+  }
+
+
+  async findAllWithRestaurantId(id: number) {
+    return await this.reviewRepository
+      .createQueryBuilder('rew')
+      .select('rew.id', 'id')
+      .addSelect('rew.star', "star")
+      .addSelect('rew.comment', 'comment')
+      .addSelect('rew.date_visit', 'visitDate')
+      .addSelect("user.name", "userName")
+      .leftJoin(User, 'user', 'user.id = rew.userId')
+      .where('rew.restaurantId = :id', { id })
       .groupBy('rew.id').addGroupBy("user.id")
       .getRawMany();
   }

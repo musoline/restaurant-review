@@ -30,7 +30,6 @@ export class ReviewController {
   @Get()
   findAll() {
     return this.reviewService.findAll();
-    // return this.reviewService.findAverageOfRestaurant(1);
   }
 
   @Get(":id")
