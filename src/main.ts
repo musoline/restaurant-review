@@ -9,9 +9,9 @@ async function bootstrap() {
   await seederService.seedData();
 
   app.enableCors({
-    origin: 'http://localhost:4200',
+    origin: 'https://shoufle.ge',
     credentials: true,
   });
-  await app.listen(3000);
+  await app.listen(3001);
 }
 bootstrap();
