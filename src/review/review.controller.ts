@@ -33,8 +33,13 @@ export class ReviewController {
     // return this.reviewService.findAverageOfRestaurant(1);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.reviewService.findOne(+id);
+  @Get(":id")
+  findAllWithUser(@Param("id") id: number) {
+    return this.reviewService.findAllWithRestaurantId(+id);
   }
+
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.reviewService.findOne(+id);
+  // }
 }

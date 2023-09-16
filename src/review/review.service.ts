@@ -4,6 +4,7 @@ import { Review } from './entities/review.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { AuthUserDto } from 'src/auth/dto/auth-user.dto';
+import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class ReviewService {
@@ -27,6 +28,19 @@ export class ReviewService {
     return this.reviewRepository
       .createQueryBuilder('review')
       .select('AVG(review.star)', 'rating')
+      .getRawMany();
+  }
+
+
+  async findAllWithRestaurantId(restaurantId: number) {
+    return await this.reviewRepository
+      .createQueryBuilder('rew')
+      .select('rew.id', 'id')
+      .addSelect('rew.star', "star")
+      .addSelect('rew.comment', 'comment')
+      .addSelect("user.name", "UserName")
+      .leftJoin(User, 'user', 'user.id = rew.userId')
+      .groupBy('rew.id').addGroupBy("user.id")
       .getRawMany();
   }
 

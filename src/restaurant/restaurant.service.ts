@@ -51,6 +51,12 @@ export class RestaurantService {
       { name: 'Restaurant 2' },
       { name: 'Restaurant 3' },
       { name: 'Restaurant 4' },
+      { name: 'Restaurant 5' },
+      { name: 'Restaurant 6' },
+      { name: 'Restaurant 7' },
+      { name: 'Restaurant 8' },
+      { name: 'Restaurant 9' },
+      { name: 'Restaurant 10' },
     ];
 
     await Promise.all(
