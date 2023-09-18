@@ -6,6 +6,8 @@ import { RefreshJwtAuthGuard } from './guards/refresh-jwt-auth.guard';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { UsersService } from 'src/users/users.service';
 import { AuthUserDto } from './dto/auth-user.dto';
+import { ApiBody } from '@nestjs/swagger';
+import { ValidateUserDto } from './dto/validate-user.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -19,6 +21,7 @@ export class AuthController {
     return await this.usersService.create(createUserDto);
   }
 
+  @ApiBody({ type: [ValidateUserDto] })
   @UseGuards(LocalAuthGuard)
   @Post('login')
   async login(@Request() req: { user: AuthUserDto }) {
